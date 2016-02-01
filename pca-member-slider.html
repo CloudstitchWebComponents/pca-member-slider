@@ -1,8 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../cloudstitch-spreadsheet/cloudstitch-spreadsheet.html">
-<link rel="stylesheet" href="./bootstrap-grid.min.css" />
-<link rel="import" href="./event-list.html">
-<link rel="import" href="./pca-event.html">
+<script src="simple-slider.js"></script>
 
 <!--
 Example:
@@ -17,9 +15,43 @@ Example:
 <dom-module id="pca-member-slider">
   <template>
     <style>               
+      .slidervisible {
+        visibility: visible;
+        opacity: 1;
+        transition: opacity 0.3s linear;
+      }
+      .sliderhidden {
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s 0.3s, opacity 0.3s linear;
+      }
     </style>
+    <cloudstitch-spreadsheet user="[[user]]" app="[[app]]" label="[[label]]" worksheet="[[worksheet]]" content="{{data}}" projection="items" auto></cloudstitch-spreadsheet>
+    <div id="theitem" class="visible">
+      <h1>{{item.FirstName}} {{item.LastName}}</h1>
+      <h2>{{item.Organization}}</h2>
+      
+    </div>
   </template>
   <script>
+    function doShuffle(array) {
+      var currentIndex = array.length, temporaryValue, randomIndex;
+
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+
+      return array;
+    }
 
     Polymer({
 
@@ -29,17 +61,42 @@ Example:
         user: {type: String},
         app: {type: String},
         label: {type: String, value: 'sheet'},
-        worksheet: {type: String, value: 'Sheet1'},
-        members: {type: String, computed: 'computeMembers(members)'}
+        worksheet: {type: String, value: 'Sheet1'},    
+        index: {type: Number, value: 0},   
+        item: {type: Object, computed: 'getItem(index, members)'}, 
+        members: {type: String, computed: 'computeMembers(data)'},
+        interval: {type: Number, value: 5000}
+      },
+            
+      getItem: function(index, members) {
+        var i = index % members.length;
+        return members[i];
       },
       
       ready: function() {
-
+        var self = this;
+        setInterval(function() {
+          self.advance();
+        }, this.interval);
+      },
+      
+      advance: function() {
+        var self = this;
+        this.$.theitem.classList.remove('slidervisible');
+        this.$.theitem.classList.add('sliderhidden');       
+        setTimeout(function() {
+          self.index = self.index + 1;          
+          self.$.theitem.classList.remove('sliderhidden');
+          self.$.theitem.classList.add('slidervisible');                 
+        }, 500);
       },
       
       computeMembers: function(members) {
         var ret = [];
-        return ret;
+        for (var i = 0; i < members.length; i++) {
+          ret.push(members[i]);
+        }
+        return doShuffle(ret);
       }
                               
     });
