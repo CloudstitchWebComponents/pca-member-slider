@@ -1,0 +1,48 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../cloudstitch-spreadsheet/cloudstitch-spreadsheet.html">
+<link rel="stylesheet" href="./bootstrap-grid.min.css" />
+<link rel="import" href="./event-list.html">
+<link rel="import" href="./pca-event.html">
+
+<!--
+Example:
+
+    <pca-member-slider></pca-member-slider>
+
+@group Cloudstitch
+@element pca-member-slider
+@demo demo/index.html
+@hero hero.svg
+-->
+<dom-module id="pca-member-slider">
+  <template>
+    <style>               
+    </style>
+  </template>
+  <script>
+
+    Polymer({
+
+      is: 'pca-member-slider',
+                 
+      properties: {       
+        user: {type: String},
+        app: {type: String},
+        label: {type: String, value: 'sheet'},
+        worksheet: {type: String, value: 'Sheet1'},
+        members: {type: String, computed: 'computeMembers(members)'}
+      },
+      
+      ready: function() {
+
+      },
+      
+      computeMembers: function(members) {
+        var ret = [];
+        return ret;
+      }
+                              
+    });
+
+  </script>
+</dom-module>

@@ -1,0 +1,30 @@
+{
+  "name": "pca-member-slider",
+  "version": "2.0.1",
+  "authors": [
+    "Ted Benson <ted@cloudstitch.com>"
+  ],
+  "description": "An element providing an event view in the style of PCA",
+  "keywords": [
+    "cloudstitch",
+    "web-component",
+    "polymer",
+    "gsheet",
+    "google-spreadsheet",
+    "spreadsheet"
+  ],
+  "main": "pca-member-slider.html",
+  "license": "BSD",
+  "homepage": "https://github.com/CloudstitchWebComponents/pca-member-slider/",
+  "ignore": [
+    "/.*",
+    "/test/"
+  ],
+  "dependencies": {
+    "cloudstitch-spreadsheet": "~2.0.3"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page",
+    "web-component-tester": "*"
+  }
+}
